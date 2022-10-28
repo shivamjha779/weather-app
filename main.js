@@ -2,12 +2,12 @@ const API_KEY= "877d04028bb9ef02acb45638b86cfbfc";
 const DAYS_OF_THE_WEEK = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 let selectedCityText;
 let selectedCity;
-const getCitiesUsingGeoLocation = async(searchText)=> {
+const getCitiesUsingGeoLocation = async (searchText)=> {
     const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${searchText}&limit=5&appid=${API_KEY}`);
     return response.json();
 }
 
-const getCurrentWeatherData = async({lat, lon, name: city})=> {
+const getCurrentWeatherData = async ({lat, lon, name: city})=> {
    const url = lat && lon? `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric` : `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
     const response = await fetch(url);
     return response.json();
@@ -136,10 +136,11 @@ const loadForecastUsingGeoLocation = () => {
 
 
 
-const loadData = async()=> {
+const loadData = async ()=> {
     const currentWeather= await getCurrentWeatherData(selectedCity);
-   loadcurrentforcast(currentWeather);
+   
    const HourlyForcast= await getHourlyForcast(currentWeather);
+   loadcurrentforcast(currentWeather);
    loadHourlyForcast(currentWeather, HourlyForcast);
    loadFiveDayForecast(HourlyForcast);
    loadFeelsLike(currentWeather);
